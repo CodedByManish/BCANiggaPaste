@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCANiggaPaste - Modern Text Sharing</title>
+    <meta name="description" content="BCANiggaPaste is a modern text sharing platform with rich text editing, file sharing, and URL shortening features.">
+    <meta name="keywords" content="text sharing, file sharing, URL shortening, rich text editor, pastebin">
+    <meta name="author" content="BCANigga Team">
+    <meta name="theme-color" content="#1F2937">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
+</head>
+<body class="bg-gray-900 transition-colors duration-300">
+    <div class="particles-container w-full h-[10vh] overflow-hidden">
+      <img src="images/bg-pattern.png" alt="BCANigga" class="w-full h-full object-cover">
+    </div>
+
+    <div class="min-h-screen flex flex-col">
+        <header class="bg-gray-800 shadow-md backdrop-filter backdrop-blur-sm bg-opacity-90 sticky top-0 z-10">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="images/logo.png" alt="BCA" class="h-7 w-12 mr-2">
+                    <h1 class="text-2xl font-bold text-blue-400">BCA<span class="text-gray-300">NiggaPaste</span></h1>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8 flex-grow">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 hidden md:block">
+                    <div class="mobile-features-toggle bg-gray-800 rounded-lg shadow-lg p-4 text-center mb-4 block md:hidden">
+                        <button id="toggle-features-btn" class="text-blue-400 hover:text-blue-300 transition-colors">
+                            <i class="fas fa-chevron-down mr-2"></i> Show Features
+                        </button>
+                    </div>
+                    <div id="feature-cards-container" class="hidden md:grid md:grid-cols-3 gap-4 col-span-full">
+                        <div class="feature-card bg-gray-800 rounded-lg shadow-lg p-6 transform hover:scale-105 transition-transform duration-300">
+                            <div class="text-blue-500 text-4xl mb-4"><i class="fas fa-pen-fancy"></i></div>
+                            <h3 class="text-lg font-semibold text-gray-200 mb-2">Rich Text Editing</h3>
+                            <p class="text-gray-400">Format your text with styling options and create professional-looking content.</p>
+                        </div>
+                        <div class="feature-card bg-gray-800 rounded-lg shadow-lg p-6 transform hover:scale-105 transition-transform duration-300">
+                            <div class="text-blue-500 text-4xl mb-4"><i class="fas fa-file-upload"></i></div>
+                            <h3 class="text-lg font-semibold text-gray-200 mb-2">File Sharing</h3>
+                            <p class="text-gray-400">Upload and share files up to 100MB with customizable expiration settings.</p>
+                        </div>
+                        <div class="feature-card bg-gray-800 rounded-lg shadow-lg p-6 transform hover:scale-105 transition-transform duration-300">
+                            <div class="text-blue-500 text-4xl mb-4"><i class="fas fa-link"></i></div>
+                            <h3 class="text-lg font-semibold text-gray-200 mb-2">URL Shortening</h3>
+                            <p class="text-gray-400">Create compact, shareable links that redirect to your original long URLs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="lg:col-span-2">
+                    <div class="glassmorphism bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-200 flex items-center">
+                            <i class="fas fa-plus-circle mr-2 text-blue-500"></i> Create New Paste
+                        </h2>
+                        
+                        <div class="mb-6">
+                            <div class="tabs flex border-b border-gray-600 mb-4">
+                                <button id="tab-text" class="tab-btn active py-2 px-4 mr-2 focus:outline-none" data-tab="text">
+                                    <i class="fas fa-font mr-1"></i> Text
+                                </button>
+                                <button id="tab-file" class="tab-btn py-2 px-4 mr-2 focus:outline-none" data-tab="file">
+                                    <i class="fas fa-file-alt mr-1"></i> File Upload
+                                </button>
+                                <button id="tab-url" class="tab-btn py-2 px-4 focus:outline-none" data-tab="url">
+                                    <i class="fas fa-link mr-1"></i> Shorten URL
+                                </button>
+                            </div>
+
+                            <div id="tab-content-text" class="tab-content">
+                                <div class="editor-toolbar flex flex-wrap mb-2 space-x-2 p-2 bg-gray-700 rounded-t-lg">
+                                    <button class="format-btn p-2 rounded hover:bg-gray-600" data-format="bold" title="Bold">
+                                        <i class="fas fa-bold"></i>
+                                    </button>
+                                    <button class="format-btn p-2 rounded hover:bg-gray-600" data-format="italic" title="Italic">
+                                        <i class="fas fa-italic"></i>
+                                    </button>
+                                    <button class="format-btn p-2 rounded hover:bg-gray-600" data-format="underline" title="Underline">
+                                        <i class="fas fa-underline"></i>
+                                    </button>
+                                    <button class="format-btn p-2 rounded hover:bg-gray-600" data-format="insertOrderedList" title="Numbered List">
+                                        <i class="fas fa-list-ol"></i>
+                                    </button>
+                                    <button class="format-btn p-2 rounded hover:bg-gray-600" data-format="insertUnorderedList" title="Bullet List">
+                                        <i class="fas fa-list-ul"></i>
+                                    </button>
+                                    <button class="format-btn p-2 rounded hover:bg-gray-600" data-format="createLink" title="Insert Link">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                </div>
+                                <div class="border border-gray-600 rounded-b-lg overflow-hidden">
+                                    <div id="editor" class="p-4 min-h-[300px] max-h-[500px] overflow-y-auto focus:outline-none" contenteditable="true"></div>
+                                </div>
+                            </div>
+
+                            <div id="tab-content-file" class="tab-content hidden">
+                                <div class="border-2 border-dashed border-gray-600 rounded-lg p-12 text-center">
+                                    <input type="file" id="file-upload" class="hidden">
+                                    <label for="file-upload" class="cursor-pointer flex flex-col items-center">
+                                        <div class="file-upload-animation mb-4">
+                                            <i class="fas fa-cloud-upload-alt text-5xl text-blue-500"></i>
+                                        </div>
+                                        <span class="text-gray-300 text-lg">Drag and drop or click to upload</span>
+                                        <span class="text-sm text-gray-400 mt-2">Max size: 100MB</span>
+                                    </label>
+                                    <div id="file-info" class="mt-6 hidden">
+                                        <div class="flex items-center justify-center">
+                                            <i class="fas fa-file-alt text-blue-500 text-3xl mr-3"></i>
+                                            <div class="text-left">
+                                                <p id="file-name" class="text-gray-200 font-medium"></p>
+                                                <p id="file-size" class="text-sm text-gray-400"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tab-content-url" class="tab-content hidden">
+                                <div class="p-4 bg-gray-700 rounded-lg">
+                                    <label class="block text-sm font-medium text-gray-200 mb-1">
+                                        <i class="fas fa-link mr-1"></i> URL to Shorten
+                                    </label>
+                                    <div class="flex">
+                                        <div class="flex-shrink-0 flex items-center px-3 border border-r-0 border-gray-600 bg-gray-600 rounded-l-lg">
+                                            <i class="fas fa-globe text-gray-400"></i>
+                                        </div>
+                                        <input type="url" id="url-input" placeholder="https://example.com/very-long-url-to-be-shortened" 
+                                               class="w-full p-3 border border-gray-600 rounded-r-lg bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-400">Create a shorter, more manageable link that redirects to your original URL.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 items-start sm:items-center mb-4">
+                            <div class="w-full sm:w-1/2">
+                                <label class="block text-sm font-medium text-gray-200 mb-1">
+                                    <i class="fas fa-clock mr-1"></i> Expiry Time
+                                </label>
+                                <select id="expiry-select" class="w-full p-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                    <option value="never">Never</option>
+                                    <option value="1h">1 Hour</option>
+                                    <option value="1d">1 Day</option>
+                                    <option value="1w">1 Week</option>
+                                </select>
+                            </div>
+                            <div class="w-full sm:w-auto sm:ml-auto">
+                                <button id="submit-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors relative overflow-hidden pulse-btn">
+                                    <span class="relative z-10 flex items-center justify-center">
+                                        <i class="fas fa-paper-plane mr-2"></i>
+                                        Create Paste
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-container" class="glassmorphism bg-gray-800 rounded-lg shadow-lg p-6 hidden">
+                        <div class="success-animation mb-4">
+                            <i class="fas fa-check-circle text-green-500 text-4xl"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-4 text-gray-200 text-center">Your Paste is Ready!</h2>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-200 mb-1">Share Link</label>
+                            <div class="flex">
+                                <input type="text" id="result-url" readonly class="flex-grow p-3 border border-gray-600 rounded-l-lg bg-gray-700 text-gray-200">
+                                <button id="copy-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-r-lg transition-all">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <button id="new-paste-btn" class="text-blue-400 hover:underline flex items-center">
+                                <i class="fas fa-plus mr-1"></i> Create New Paste
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="glassmorphism bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-200">
+                            <i class="fas fa-question-circle text-blue-500 mr-2"></i> Why BCANiggaPaste?
+                        </h3>
+                        <ul class="space-y-3 text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Simple & secure text sharing</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>No registration required</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Custom expiration times</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>File uploads up to 100MB</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Fast URL shortening</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="glassmorphism bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-200">
+                            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i> Tips
+                        </h3>
+                        <div class="space-y-4 text-gray-400">
+                            <div class="tip-card p-3 bg-blue-900 bg-opacity-30 rounded-lg">
+                                <p class="text-sm"><strong>Quick Share:</strong> Use keyboard shortcuts like Ctrl+B for bold text formatting.</p>
+                            </div>
+                            <div class="tip-card p-3 bg-green-900 bg-opacity-30 rounded-lg">
+                                <p class="text-sm"><strong>Secure Files:</strong> Set expiry times for sensitive uploads to auto-delete.</p>
+                            </div>
+                            <div class="tip-card p-3 bg-purple-900 bg-opacity-30 rounded-lg">
+                                <p class="text-sm"><strong>URL Tip:</strong> Use shortened URLs in social media posts to save character space.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-gray-800 shadow-inner py-6 mt-8 backdrop-filter backdrop-blur-sm bg-opacity-90">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <img src="/logo.png" alt="BCA" class="h-8 w-8 inline-block mr-2">
+                        <span class="text-gray-400">BCANiggaPaste &copy; 2025</span>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-4 text-center text-sm text-gray-500">
+                    <p>Built For BCANigga❤️. MIT License.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden backdrop-filter backdrop-blur-sm">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-xl">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mx-auto"></div>
+            <p class="text-center mt-6 text-gray-300 font-medium">Processing your request...</p>
+        </div>
+    </div>
+
+    <audio id="success-sound" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
