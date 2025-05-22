@@ -14,10 +14,8 @@ A lightweight clone of JustPaste.it built using HTML, Tailwind CSS, JavaScript, 
 ├── index.html
 ├── style.css
 ├── script.js
-├── save_paste.php
-├── upload.php
-├── /pastes       # Stores .json paste data
-└── /uploads      # Stores uploaded files
+├── php/
+├── image/
 ```
 
 ## ⚙️ Requirements
