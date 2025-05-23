@@ -10,10 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'], $_POST['id']))
         exit;
     }
 
-    $dir = '../DB/s-url/';
-    if (!is_dir($dir)) {
-        mkdir($dir, 0777, true);
-    }
+    // Change this directory to root folder (htdocs/)
+    $dir = realpath(__DIR__ . '/../') . '/';
 
     $file = $dir . $id . '.txt';
 
